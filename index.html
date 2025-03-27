@@ -307,6 +307,22 @@
                         <button type="button" onclick="runExportSet(1)">Export Set</button>
                         <button type="button" onclick="runDeleteSet(1)" class="delset">Delete Set</button>
                     </div>
+                    <hr />
+                    <div>
+                        <b>Calc Farm Input:</b><br />
+                        <p> Instructions:
+                            <ol>
+                                <li>Paste your team into the textbox below labeled "Your Team"</li>
+                                <li>Paste all the threats you feel are important to consider in the textbox to the right labeled "Target Opponents"</li>
+                                <li>Click "Run Calcs" (this may take a while).</li>
+                                <li>Copy the CSV in the text area into a text or spreadsheet editor for easier viewing.</li>
+                            </ol>
+                            Note that weathers and terrains are <b>turned OFF</b> for all calcs. Apply the multiplier onto the results if you want weather/terrain effects. This, of course, means Weather Ball will always be presented as its weaker normal-type form in these calcs.
+                        </p>
+                        Your Team:<br />
+                        <textarea rows="36" cols="36" id="calcFarmYourTeam"></textarea><br /><br />
+                        <button type="button" onclick="GenerateCsv()">Run Calcs</button>
+                    </div>
                 </div>
             </div>
             <div class="panel field-info" id="field-panel">
@@ -780,6 +796,12 @@
                         <button type="button" onclick="runSaveCalc(2)">Save Calc Set</button>
                         <button type="button" onclick="runExportSet(2)">Export Set</button>
                         <button type="button" onclick="runDeleteSet(2)" class="delset">Delete Set</button>
+                    </div>                    
+                    <hr />
+                    <div>
+                        <b>Calc Farm Input:</b><br /><br />
+                        Target Opponents:<br />
+                        <textarea rows="36" cols="36" id="calcFarmTargetOpponents"></textarea>
                     </div>
                 </div>
             </div>
