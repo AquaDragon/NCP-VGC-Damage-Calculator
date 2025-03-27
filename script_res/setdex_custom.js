@@ -948,14 +948,15 @@ function headerName(p) {
                                                           evString(p.evs.sp, p.nature, 'sp')].join('/');
 }
 
+// Reads in the sets given by the user on both sides, runs all calculations, and generates
+// the CSV that summarizes the results.
 function GenerateCsv() {
     offensiveResults = {};
     defensiveResults = {};
 
-    saveCalcFarmSetsAs('calcfarm_yourteam', 'calcFarmYourTeam');
+    var yourTeamSets = saveCalcFarmSetsAs('calcfarm_yourteam', 'calcFarmYourTeam');
     leftPokemon = [];
 
-    var yourTeamSets = JSON.parse(localStorage.getItem('calcfarm_yourteam')).sets;
     for (var j = 0; j < yourTeamSets.length; ++j) {
         var fullName = yourTeamSets[j][0] + ' (' + yourTeamSets[j][1] + ')';
         loadPreset('#p1', fullName);
@@ -967,9 +968,8 @@ function GenerateCsv() {
     }    
     console.log('Done loading Your Team.');
 
-    saveCalcFarmSetsAs('calcfarm_targets', 'calcFarmTargetOpponents');
+    var targetSets = saveCalcFarmSetsAs('calcfarm_targets', 'calcFarmTargetOpponents');
     rightPokemon = [];
-    var targetSets = JSON.parse(localStorage.getItem('calcfarm_targets')).sets;
     for (var j = 0; j < targetSets.length; ++j) {
         var fullName = targetSets[j][0] + ' (' + targetSets[j][1] + ')';
         loadPreset('#p2', fullName);
@@ -1044,19 +1044,14 @@ function GenerateCsv() {
         csv += '\n************************************************************\n\n';
     }
     $('#customMon').val(csv);
-
     alert('CSV has been written to the custom set text box!\n\nCopy it into a .csv file and then import into Google Sheets for easier viewing.')
 }
 
-// saves all pokemon entered into the text area as "threats"
+// Saves all pokemon entered into the `source` text as custom sets "{category} #{index}".
 function saveCalcFarmSetsAs(category, source) {
-    localStorage.removeItem(category);
-    setsObject = {
-        sets: [],
-    }
+    sets = [];
 
     var string = document.getElementById(source).value;
-    var sidebarCleared = false;
     //numPokemon separates individual Pokemon so user can add multiple Pokemon at once under the same set name
     var numPokemon = string.split('\n\n');
     numPokemon = numPokemon.filter(element => element);
@@ -1241,16 +1236,15 @@ function saveCalcFarmSetsAs(category, source) {
                 "moves": moves,
             }
             customFormat["tera_type"] = tera_type;
-            setsObject.sets.push([species, spreadName]);
+            sets.push([species, spreadName]);
             saveSets(9, customFormat, species, spreadName);
 
         }
-        localStorage.setItem(category, JSON.stringify(setsObject));
         loadSetdexScript();
-        alert("Set(s) saved.");
     }
     catch (x) {
         alert(x.stack);
         alert("Paste couldn't be processed. Please make sure that the contents are only Pokemon.");
     }
+    return sets;
 }
