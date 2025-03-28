@@ -1043,8 +1043,17 @@ function GenerateCsv() {
         }
         csv += '\n************************************************************\n\n';
     }
-    $('#customMon').val(csv);
-    alert('CSV has been written to the custom set text box!\n\nCopy it into a .csv file and then import into Google Sheets for easier viewing.')
+    $('#csvResults').val(csv);
+
+    var data = 'data:application/csv;carset=utf-8,' + encodeURIComponent(csv);
+    var exportLink = document.createElement('a');
+    exportLink.setAttribute('href', data);
+    exportLink.setAttribute('download', 'calcs.csv');
+    exportLink.setAttribute('target', '_blank');
+    exportLink.appendChild(document.createTextNode('Download as calcs.csv'));
+    $('#csvResultsLink').html(exportLink);
+
+    alert('CSV has been written to the results text box!\n\nCopy it into a .csv file and then import into Google Sheets for easier viewing.');
 }
 
 // Saves all pokemon entered into the `source` text as custom sets "{category} #{index}".

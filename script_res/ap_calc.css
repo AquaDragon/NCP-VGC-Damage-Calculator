@@ -56,6 +56,11 @@ th {
 .generations {
     padding-left: 1em;
 }
+.farm-panel {
+    float: left;
+    width: 33em;
+    padding: 3px;
+}
 
 /* general button styling */
 .btn {
