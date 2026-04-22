@@ -89,6 +89,42 @@
                 <br />
                 This generation's set updates are still under construction. If you would like to return to the old Trainer Tower sets, check this box: <input type="checkbox" id="WIPsets" />
             </p>
+            <p>A fork of <a href="https://twitter.com/nerd_of_now">@nerd_of_now</a>'s VGC damage calculator, adapted to enable the computation and visualization of many calcs at once.</p>
+                       
+            <div class="panel calc-farm-panel" id="calc-farm-panel">
+                <div class="panel-heading"><h4 class="panel-title">Calc Farm</h4></div>
+                <div class="panel-body">
+                    <div>
+                        <p><b>DISCLAIMER: </b> This calc farm is in alpha and there are likely bugs - double-check important calcs before basing important team decisions on them!</p>
+                        <p>Instructions:</p>
+                            <ol>
+                                <li>Paste your team into the textbox below labeled "Your Team"</li>
+                                <li>Paste all the threats you feel are important to consider in the textbox to the right labeled "Target Opponents"</li>
+                                <li>Click "Run Calcs" (this may take a while).</li>
+                                <li>Copy the CSV in the text area into a text or spreadsheet editor for easier viewing. Alternatively, click the "results.csv" link to download a CSV file.</li>
+                            </ol>
+                        <p>
+                            Note that weathers and terrains are <b>turned OFF</b> for all calcs. Apply the multiplier onto the results if you want weather/terrain effects. This, of course, means Weather Ball will always be presented as its weaker normal-type form in these calcs.
+                        </p>
+                    </div>
+                    <div class="farm-panel">
+                        <h3>Your Team:</h3><br />
+                        <textarea rows="36" cols="36" id="calcFarmYourTeam"></textarea><br /><br />
+                    </div>
+                    <div class="farm-panel">
+                        <h3>Target Opponents:</h3><br />
+                        <textarea rows="36" cols="36" id="calcFarmTargetOpponents"></textarea>
+                    </div>
+                    <div class="farm-panel">
+                        <h3>Results:</h3><br />
+                        <textarea rows="9" cols="36" id="csvResults"></textarea><br />
+                        <div id="csvResultsLink"></div><br /><br />
+                        <button type="button" onclick="GenerateCsv()">Run Calcs</button><br /><br />
+                        <button type="button" onclick="PopulateRegG()">Fill with T-block's Reg G Opponent List</button><br /><br />
+                        <button type="button" onclick="PopulateRegI()">Fill with T-block's Reg I Opponent List</button><br /><br />
+                    </div>
+                </div>
+            </div>
 
             <div class="move-result-group" title="Select a move to show detailed results.">
                 <div class="move-result-subgroup">
@@ -306,7 +342,7 @@
                         <button type="button" onclick="runSaveCalc(1)">Save Calc Set</button>
                         <button type="button" onclick="runExportSet(1)">Export Set</button>
                         <button type="button" onclick="runDeleteSet(1)" class="delset">Delete Set</button>
-                    </div>
+                    </div>                    
                 </div>
             </div>
             <div class="panel field-info" id="field-panel">
@@ -783,6 +819,39 @@
                     </div>
                 </div>
             </div>
+            <div class="panel calc-farm-panel" id="calc-farm-panel">
+                <div class="panel-heading"><h4 class="panel-title">Calc Farm</h4></div>
+                <div class="panel-body">
+                    <div>
+                        <p><b>DISCLAIMER: </b> This calc farm is in alpha and there are likely bugs - double-check important calcs before basing important team decisions on them!</p>
+                        <p>Instructions:</p>
+                            <ol>
+                                <li>Paste your team into the textbox below labeled "Your Team"</li>
+                                <li>Paste all the threats you feel are important to consider in the textbox to the right labeled "Target Opponents"</li>
+                                <li>Click "Run Calcs" (this may take a while).</li>
+                                <li>Copy the CSV in the text area into a text or spreadsheet editor for easier viewing. Alternatively, click the "results.csv" link to download a CSV file.</li>
+                            </ol>
+                        <p>
+                            Note that weathers and terrains are <b>turned OFF</b> for all calcs. Apply the multiplier onto the results if you want weather/terrain effects. This, of course, means Weather Ball will always be presented as its weaker normal-type form in these calcs.
+                        </p>
+                    </div>
+                    <table border="1"><tr>
+                        <td><div>
+                            Your Team:<br />
+                            <textarea rows="36" cols="36" id="calcFarmYourTeam"></textarea><br /><br />
+                        </div></td>                
+                        <td><div>
+                            Target Opponents:<br />
+                            <textarea rows="36" cols="36" id="calcFarmTargetOpponents"></textarea>
+                        </div></td>
+                        <td><div>
+                            <textarea rows="9" cols="36" id="csvResults"></textarea><br />
+                            <button type="button" onclick="GenerateCsv()">Run Calcs</button>
+                            <div id="csvResultsLink"></div>
+                        </div></td>
+                    </tr></table>
+                </div>
+            </div>
             <div class="footer">
                 <p><em>This calculator is based on the work of Tapin, Firestorm, squirrelboy1225, and DaWoblefet, whose work was in turn based on the work of Honko, gamut, and Zarel. It has been optimized for players in the current Pokémon Video Game Championship Series by nerd of now. <br />Many thanks to Nugget Bridge and Trainer Tower for hosting previous incarnations of this calculator in the past.</em></p>
             </div>
@@ -791,14 +860,6 @@
         </div>
 
         <div style="display:inline-block;width:728px;height:30px" />
-        <!-- Damage Calc Ad (PROBABLY WILL REMAIN UNUSED) -->
-        <!--<ins class="adsbygoogle"
-         style="display:inline-block;width:728px;height:90px"
-         data-ad-client="ca-pub-7571541875475494"
-         data-ad-slot="3642617298"></ins>
-    <script>
-        (adsbygoogle = window.adsbygoogle || []).push({});
-    </script>-->
 
         <script src="jquery-3.1.1.min.js"></script>
         <script type="text/javascript" src="script_res/switch_mode.js"></script>
@@ -837,6 +898,8 @@
         <script type="text/javascript" src="script_res/damage_rby.js"></script>
         <script type="text/javascript" src="script_res/ko_chance.js"></script>
         <script type="text/javascript" src="script_res/statuscalc.js"></script>
+        <script type="text/javascript" src="script_res/reg_g_opponents.js"></script>
+        <script type="text/javascript" src="script_res/reg_i_opponents.js"></script>
         <script type="text/javascript" src="afd_res/spamton.js"></script>
         <script type="text/javascript" src="afd_res/noise.js"></script>
         <script type="text/javascript" src="afd_res/pokedex_afd24.js"></script>

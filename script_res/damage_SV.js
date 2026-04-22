@@ -69,6 +69,47 @@ function CALCULATE_ALL_MOVES_SV(p1, p2, field) {
     return results;
 }
 
+function CALCULATE_ALL_MOVES_WITHOUT_ABILITIES_SV(p1, p2, field) {
+    // TODO(tblock007) - determine whether we want to incorporate these abilities in some way
+    // checkTerastal(p1);
+    // checkTerastal(p2);
+
+    // checkParadoxAbilities(p1, field.getTerrain(), field.getWeather());
+    // checkParadoxAbilities(p2, field.getTerrain(), field.getWeather());
+
+    // checkSeeds(p1, field.getTerrain());
+    // checkSeeds(p2, field.getTerrain());
+
+    // checkSwordShield(p1);
+    // checkSwordShield(p2);
+
+    p1.stats[AT] = getModifiedStat(p1.rawStats[AT], p1.boosts[AT]); //new order is important for the proper Protosynthesis/Quark Drive boost
+    p1.stats[DF] = getModifiedStat(p1.rawStats[DF], p1.boosts[DF]);
+    p1.stats[SA] = getModifiedStat(p1.rawStats[SA], p1.boosts[SA]);
+    p1.stats[SD] = getModifiedStat(p1.rawStats[SD], p1.boosts[SD]);
+    p1.stats[SP] = getModifiedStat(p1.rawStats[SP], p1.boosts[SP]);
+    setHighestStat(p1, 0);
+    p1.stats[SP] = getFinalSpeed(p1, field.getWeather(), field.getTailwind(0), field.getSwamp(0), field.getTerrain());
+    $(".p1-speed-mods").text(p1.stats[SP]);
+    p2.stats[AT] = getModifiedStat(p2.rawStats[AT], p2.boosts[AT]);
+    p2.stats[DF] = getModifiedStat(p2.rawStats[DF], p2.boosts[DF]);
+    p2.stats[SA] = getModifiedStat(p2.rawStats[SA], p2.boosts[SA]);
+    p2.stats[SD] = getModifiedStat(p2.rawStats[SD], p2.boosts[SD]);
+    p2.stats[SP] = getModifiedStat(p2.rawStats[SP], p2.boosts[SP]);
+    setHighestStat(p2, 1);
+    p2.stats[SP] = getFinalSpeed(p2, field.getWeather(), field.getTailwind(1), field.getSwamp(1), field.getTerrain());
+    $(".p2-speed-mods").text(p2.stats[SP]);
+    var side1 = field.getSide(1);
+    var side2 = field.getSide(0);
+    getWeightMods(p1, p2);
+    var results = [[],[]];
+    for (var i = 0; i < 4; i++) {
+        results[0][i] = GET_DAMAGE_SV(p1, p2, p1.moves[i], side1);
+        results[1][i] = GET_DAMAGE_SV(p2, p1, p2.moves[i], side2);
+    }
+    return results;
+}
+
 function GET_DAMAGE_SV(attacker, defender, move, field) {
     var moveDescName = move.name;
     var isQuarteredByProtect = false, isMeFirst = false;
