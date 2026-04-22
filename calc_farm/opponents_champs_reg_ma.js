@@ -238,8 +238,6 @@ Modest Nature
 - Weather Ball  
 - Protect  
 
-
-
 Maushold @ Chople Berry  
 Ability: Friend Guard  
 Level: 50  
