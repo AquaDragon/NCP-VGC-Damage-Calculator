@@ -38,63 +38,11 @@
             </div>
         </div>
         <div class="wrapper">
-            <div>
-                <span class="title-text">VGC 2026: Champions Damage Calculator</span>
-                <span class="generations" title="Select the generation.">
-                    <input class="gen btn-input" type="radio" name="gen" value="1" id="gen1" /><label class="btn btn-small btn-left" for="gen1">RBY</label>
-                    <input class="gen btn-input" type="radio" name="gen" value="2" id="gen2" /><label class="btn btn-small btn-mid" for="gen2">GSC</label>
-                    <input class="gen btn-input" type="radio" name="gen" value="3" id="gen3" /><label class="btn btn-small btn-mid" for="gen3">ADV</label>
-                    <input class="gen btn-input" type="radio" name="gen" value="4" id="gen4" /><label class="btn btn-small btn-mid" for="gen4">DPP</label>
-                    <input class="gen btn-input" type="radio" name="gen" value="5" id="gen5" /><label class="btn btn-small btn-mid" for="gen5">B/W</label>
-                    <input class="gen btn-input" type="radio" name="gen" value="6" id="gen6" /><label class="btn btn-small btn-mid" for="gen6">ORAS</label>
-                    <input class="gen btn-input" type="radio" name="gen" value="7" id="gen7" /><label class="btn btn-small btn-mid" for="gen7">USUM</label>
-                    <input class="gen btn-input" type="radio" name="gen" value="8" id="gen8" /><label class="btn btn-small btn-mid" for="gen8">SWSH</label>
-                    <input class="gen btn-input" type="radio" name="gen" value="9" id="gen9" /><label class="btn btn-small btn-mid" for="gen9">S/V</label>
-                    <input class="gen btn-input" type="radio" name="gen" value="10" id="gen10" checked="checked" /><label class="btn btn-small btn-right" for="gen10">CHAMP</label>
-                </span>
-            </div>
-            <hr />
-            <p><br /><br /></p>
-            <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-            <!-- Damage Calc Ad (PROBABLY WILL REMAIN UNUSED) -->
-            <!--<ins class="adsbygoogle"
-             style="display:inline-block;width:728px;height:90px"
-             data-ad-client="ca-pub-7571541875475494"
-             data-ad-slot="3642617298"></ins>
-        <script>
-            (adsbygoogle = window.adsbygoogle || []).push({});
-        </script>-->
-            <p>Our new Legends Z-A Damage Calculator is now live! Check it out <a href="za-calc.html"><b>here</b></a>! We also have a Let's Go Pikachu/Eevee Damage Calculator <a href="lgpe-calc.html"><b>here</b></a>.</p>
-            <p>VGC 2026 calculator maintainenance by Alex Collins (<a href="https://twitter.com/nerd_of_now">@nerd_of_now</a>). Basis of the calculator by Jake White (<a href="https://twitter.com/squirrelboydev" target="_blank" rel="noopener noreferrer">@squirrelboydev</a>).</p>
-            <p>
-                Pokémon Champions is here! We're working on curating sets for Regulation M-A.
-                <!--With VGC 2018 getting its own ladder for the month, Gen 7 sets have been updated to be better tuned to the format!-->
-                <!--<br><b><u>This calculator contains spoilers for the Indigo Disk DLC.</u></b> This includes Pokémon, moves, abilities, items, and the new Tera Type. Use at your own discretion.-->
-            </p>
-            <select style="float:right;" class="hide calc-trigger gen-specific g10" id="toggleResult" onchange="toggleResultDisplay(this.value)">
-                <option value="SPs">SPs</option>
-                <option value="raw">Actual Stats</option>
-                <option value="EVs">EVs</option>
-            </select>
-            <!--<br><p>Is there an important or relevant set missing? <a href="https://forms.gle/zBbEnvp2vZ2UADUJA" target="_blank" rel="noopener noreferrer">Give us your suggestion!</a></p>-->
-
-            <p>
-                <!--If you like what we do here, please consider supporting us on <a href="https://www.buymeacoffee.com/NCPDamageCalc" target="_blank" rel="noopener noreferrer">Buy Me a Coffee</a>--><!--[HYPERLINK BLOCKED]-->
-                <!--!
-            <br>-->
-                For any issues with or other suggestions for this version of the Damage Calculator, contact Alex on <a href="https://github.com/nerd-of-now/NCP-VGC-Damage-Calculator/issues" target="_blank" rel="noopener noreferrer">Github</a>, <a href="https://bsky.app/profile/nerdofnow.bsky.social" target="_blank" rel="noopener noreferrer">Bluesky</a>, or <a href="https://twitter.com/nerd_of_now" target="_blank" rel="noopener noreferrer">X formerly known as Twitter</a>.
-            </p>
-            <!-- GEN 7 SET TEMP -->
-            <p class="hide gen-specific g6 g7">
-                <br />
-                This generation's set updates are still under construction. If you would like to return to the old Trainer Tower sets, check this box: <input type="checkbox" id="WIPsets" />
-            </p>
-            <p>A fork of <a href="https://twitter.com/nerd_of_now">@nerd_of_now</a>'s VGC damage calculator, adapted to enable the computation and visualization of many calcs at once.</p>
-                       
             <div class="panel calc-farm-panel" id="calc-farm-panel">
                 <div class="panel-heading"><h4 class="panel-title">Calc Farm</h4></div>
                 <div class="panel-body">
                     <div>
+                        <p>A fork of <a href="https://twitter.com/nerd_of_now">@nerd_of_now</a>'s VGC damage calculator, adapted to enable the computation and visualization of many calcs at once.</p>
                         <p><b>DISCLAIMER: </b> This calc farm is in alpha and there are likely bugs - double-check important calcs before basing important team decisions on them!</p>
                         <p>Instructions:</p>
                             <ol>
@@ -126,6 +74,48 @@
                     </div>
                 </div>
             </div>
+            <hr>
+            <div>
+                <span class="title-text">VGC 2026: Champions Damage Calculator</span>
+                <span class="generations" title="Select the generation.">
+                    <input class="gen btn-input" type="radio" name="gen" value="1" id="gen1" /><label class="btn btn-small btn-left" for="gen1">RBY</label>
+                    <input class="gen btn-input" type="radio" name="gen" value="2" id="gen2" /><label class="btn btn-small btn-mid" for="gen2">GSC</label>
+                    <input class="gen btn-input" type="radio" name="gen" value="3" id="gen3" /><label class="btn btn-small btn-mid" for="gen3">ADV</label>
+                    <input class="gen btn-input" type="radio" name="gen" value="4" id="gen4" /><label class="btn btn-small btn-mid" for="gen4">DPP</label>
+                    <input class="gen btn-input" type="radio" name="gen" value="5" id="gen5" /><label class="btn btn-small btn-mid" for="gen5">B/W</label>
+                    <input class="gen btn-input" type="radio" name="gen" value="6" id="gen6" /><label class="btn btn-small btn-mid" for="gen6">ORAS</label>
+                    <input class="gen btn-input" type="radio" name="gen" value="7" id="gen7" /><label class="btn btn-small btn-mid" for="gen7">USUM</label>
+                    <input class="gen btn-input" type="radio" name="gen" value="8" id="gen8" /><label class="btn btn-small btn-mid" for="gen8">SWSH</label>
+                    <input class="gen btn-input" type="radio" name="gen" value="9" id="gen9" /><label class="btn btn-small btn-mid" for="gen9">S/V</label>
+                    <input class="gen btn-input" type="radio" name="gen" value="10" id="gen10" checked="checked" /><label class="btn btn-small btn-right" for="gen10">CHAMP</label>
+                </span>
+            </div>
+            <hr />
+            <p>Our new Legends Z-A Damage Calculator is now live! Check it out <a href="za-calc.html"><b>here</b></a>! We also have a Let's Go Pikachu/Eevee Damage Calculator <a href="lgpe-calc.html"><b>here</b></a>.</p>
+            <p>VGC 2026 calculator maintainenance by Alex Collins (<a href="https://twitter.com/nerd_of_now">@nerd_of_now</a>). Basis of the calculator by Jake White (<a href="https://twitter.com/squirrelboydev" target="_blank" rel="noopener noreferrer">@squirrelboydev</a>).</p>
+            <p>
+                Pokémon Champions is here! We're working on curating sets for Regulation M-A.
+                <!--With VGC 2018 getting its own ladder for the month, Gen 7 sets have been updated to be better tuned to the format!-->
+                <!--<br><b><u>This calculator contains spoilers for the Indigo Disk DLC.</u></b> This includes Pokémon, moves, abilities, items, and the new Tera Type. Use at your own discretion.-->
+            </p>
+            <select style="float:right;" class="hide calc-trigger gen-specific g10" id="toggleResult" onchange="toggleResultDisplay(this.value)">
+                <option value="SPs">SPs</option>
+                <option value="raw">Actual Stats</option>
+                <option value="EVs">EVs</option>
+            </select>
+            <!--<br><p>Is there an important or relevant set missing? <a href="https://forms.gle/zBbEnvp2vZ2UADUJA" target="_blank" rel="noopener noreferrer">Give us your suggestion!</a></p>-->
+
+            <p>
+                <!--If you like what we do here, please consider supporting us on <a href="https://www.buymeacoffee.com/NCPDamageCalc" target="_blank" rel="noopener noreferrer">Buy Me a Coffee</a>--><!--[HYPERLINK BLOCKED]-->
+                <!--!
+            <br>-->
+                For any issues with or other suggestions for this version of the Damage Calculator, contact Alex on <a href="https://github.com/nerd-of-now/NCP-VGC-Damage-Calculator/issues" target="_blank" rel="noopener noreferrer">Github</a>, <a href="https://bsky.app/profile/nerdofnow.bsky.social" target="_blank" rel="noopener noreferrer">Bluesky</a>, or <a href="https://twitter.com/nerd_of_now" target="_blank" rel="noopener noreferrer">X formerly known as Twitter</a>.
+            </p>
+            <!-- GEN 7 SET TEMP -->
+            <p class="hide gen-specific g6 g7">
+                <br />
+                This generation's set updates are still under construction. If you would like to return to the old Trainer Tower sets, check this box: <input type="checkbox" id="WIPsets" />
+            </p>
 
             <div class="move-result-group" title="Select a move to show detailed results.">
                 <div class="move-result-subgroup">
@@ -818,39 +808,6 @@
                         <button type="button" onclick="runExportSet(2)">Export Set</button>
                         <button type="button" onclick="runDeleteSet(2)" class="delset">Delete Set</button>
                     </div>
-                </div>
-            </div>
-            <div class="panel calc-farm-panel" id="calc-farm-panel">
-                <div class="panel-heading"><h4 class="panel-title">Calc Farm</h4></div>
-                <div class="panel-body">
-                    <div>
-                        <p><b>DISCLAIMER: </b> This calc farm is in alpha and there are likely bugs - double-check important calcs before basing important team decisions on them!</p>
-                        <p>Instructions:</p>
-                            <ol>
-                                <li>Paste your team into the textbox below labeled "Your Team"</li>
-                                <li>Paste all the threats you feel are important to consider in the textbox to the right labeled "Target Opponents"</li>
-                                <li>Click "Run Calcs" (this may take a while).</li>
-                                <li>Copy the CSV in the text area into a text or spreadsheet editor for easier viewing. Alternatively, click the "results.csv" link to download a CSV file.</li>
-                            </ol>
-                        <p>
-                            Note that weathers and terrains are <b>turned OFF</b> for all calcs. Apply the multiplier onto the results if you want weather/terrain effects. This, of course, means Weather Ball will always be presented as its weaker normal-type form in these calcs.
-                        </p>
-                    </div>
-                    <table border="1"><tr>
-                        <td><div>
-                            Your Team:<br />
-                            <textarea rows="36" cols="36" id="calcFarmYourTeam"></textarea><br /><br />
-                        </div></td>                
-                        <td><div>
-                            Target Opponents:<br />
-                            <textarea rows="36" cols="36" id="calcFarmTargetOpponents"></textarea>
-                        </div></td>
-                        <td><div>
-                            <textarea rows="9" cols="36" id="csvResults"></textarea><br />
-                            <button type="button" onclick="GenerateCsv()">Run Calcs</button>
-                            <div id="csvResultsLink"></div>
-                        </div></td>
-                    </tr></table>
                 </div>
             </div>
             <div class="footer">
