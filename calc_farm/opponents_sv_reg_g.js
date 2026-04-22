@@ -1,4 +1,4 @@
-const reg_g_opponents = `Calyrex-Shadow @ Covert Cloak
+const opponents_sv_reg_g = `Calyrex-Shadow @ Covert Cloak
 Ability: As One (Spectrier)
 Level: 50
 Tera Type: Fairy
@@ -902,6 +902,6 @@ Bold Nature
 - Moonlight
 `
 
-function PopulateRegG() {
-    $('#calcFarmTargetOpponents').val(reg_g_opponents);
+function PopulateSVRegI() {
+    $('#calcFarmTargetOpponents').val(opponents_sv_reg_g);
 }

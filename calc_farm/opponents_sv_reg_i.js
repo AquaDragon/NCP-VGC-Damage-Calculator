@@ -1,4 +1,4 @@
-const reg_i_opponents = `Calyrex-Shadow @ Focus Sash
+const opponents_sv_reg_i = `Calyrex-Shadow @ Focus Sash
 Ability: As One (Spectrier)
 Level: 50
 Tera Type: Ghost
@@ -1090,6 +1090,6 @@ Bold Nature
 - Moonlight
 `
 
-function PopulateRegI() {
-    $('#calcFarmTargetOpponents').val(reg_i_opponents);
+function PopulateSVRegI() {
+    $('#calcFarmTargetOpponents').val(opponents_sv_reg_i);
 }
