@@ -962,7 +962,7 @@ function evString(evs, nature, statName) {
 // "Incineroar@Sitrus Berry 236/44/20/0-/124+/84".
 function headerName(p) {
     if (gen == 10) {
-        return p.name + '@' + p.item + ' ' + p.HPEVs + '/' + [evString(p.sps.at, p.nature, 'at'), 
+        return p.name + '@' + p.item + ' ' + p.HPSPs + '/' + [evString(p.sps.at, p.nature, 'at'), 
                                                               evString(p.sps.df, p.nature, 'df'),
                                                               evString(p.sps.sa, p.nature, 'sa'),
                                                               evString(p.sps.sd, p.nature, 'sd'),
@@ -1065,10 +1065,39 @@ function GenerateCsv() {
 
         csv += "DEFENSIVE: " + p + "\n";
         csv += '\n';
+
+        // gather all the defensive calcs sorted by move which does the most damage first
+        const chunks = [];
         i = 0;
         while (i < defensiveResults[p].length) {
-            csv += [defensiveResults[p][i][1], defensiveResults[p][i][0], defensiveResults[p][i][2], defensiveResults[p][i+1][0], defensiveResults[p][i+1][2], defensiveResults[p][i+2][0], defensiveResults[p][i+2][2], defensiveResults[p][i+3][0], defensiveResults[p][i+3][2], ].join(',') + '\n';
+            const chunk = defensiveResults[p].slice(i, i + 4);
+
+            chunk.sort((a, b) => {
+                const getMin = str => parseInt(str.split(' - ')[0], 10);
+                return getMin(b[2]) - getMin(a[2]);
+            });
+
+            if (chunk.length === 4) {
+                chunks.push(chunk);
+            }
+            // csv += [defensiveResults[p][i][1], defensiveResults[p][i][0], defensiveResults[p][i][2], defensiveResults[p][i+1][0], defensiveResults[p][i+1][2], defensiveResults[p][i+2][0], defensiveResults[p][i+2][2], defensiveResults[p][i+3][0], defensiveResults[p][i+3][2], ].join(',') + '\n';
             i += 4;
+        }
+
+        // sort mons by strongest damage calc
+        chunks.sort((a, b) => {
+            const getMin = str => parseFloat(str.split(' - ')[0], 10);
+            return getMin(b[0][2]) - getMin(a[0][2]); // descending
+        });
+
+        // then print output
+        for (const chunk of chunks) {
+            csv += [
+                chunk[0][1], chunk[0][0], chunk[0][2],
+                chunk[1][0], chunk[1][2],
+                chunk[2][0], chunk[2][2],
+                chunk[3][0], chunk[3][2],
+            ].join(',') + '\n';
         }
         csv += '\n************************************************************\n\n';
     }
