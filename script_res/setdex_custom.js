@@ -144,7 +144,7 @@ var savecustom = function (sidebarUsed = 0) {
         alert("Did you just try to stickbug the Damage Calc? lol");
         document.getElementById("customMon").value = "";
     }
-    else if (string.trim().indexOf('https://pokepast.es/') === 0) {
+    else if (string.trim().includes('pokepast.es/') && string.trim().indexOf('pokepast.es/') <= 8) {
         handleAjax(string.trim() + '/json')
             .done(function (data) {
                 var setGen = gen;
@@ -152,7 +152,10 @@ var savecustom = function (sidebarUsed = 0) {
                 if (data['title'].length && spreadName == 'My Custom Set')
                     spreadName = data['title'];
                 if (data['notes'].length && data['notes'].indexOf("Format: gen") == 0 && !isNaN(1 * data['notes'][11])) {
-                    if (isNaN(1 * data['notes'][12]))   //check for double digits
+                    if (data['notes'].includes("gen9champions")) {
+                        setGen = 10;
+                    }
+                    else if (isNaN(1 * data['notes'][12]))   //check for double digits
                         setGen = 1 * data['notes'][11];
                     else    //if this code is somehow still used when we reach gen 100 then y'all in the future can code it yourselves lol
                         setGen = 1 * (data['notes'][11] + data['notes'][12]);
@@ -784,6 +787,9 @@ function runExportSet(pnum) {
     var set = new Pokemon($('#p' + pnum));
     var tempName = $('#p' + pnum + ' input.set-selector').val();
     set.name = tempName.substring(0, tempName.indexOf(" ("));
+    if($('#p' + pnum).find('.forme').is(':visible') && saveBaseAb['p' + pnum] != ''){
+        set.ability = saveBaseAb['p' + pnum];
+    }
     var exportText = exportset(set);
     Clipboard_CopyTo(exportText);
     //tempCSV();
