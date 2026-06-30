@@ -57,20 +57,26 @@
                     </div>
                     <div class="farm-panel">
                         <h3>Your Team:</h3><br />
-                        <textarea rows="36" cols="36" id="calcFarmYourTeam"></textarea><br /><br />
+                        <textarea rows="24" cols="36" id="calcFarmYourTeam"></textarea><br /><br />
                     </div>
                     <div class="farm-panel">
                         <h3>Target Opponents:</h3><br />
-                        <textarea rows="36" cols="36" id="calcFarmTargetOpponents"></textarea>
+                        <textarea rows="24" cols="36" id="calcFarmTargetOpponents"></textarea>
                     </div>
                     <div class="farm-panel">
                         <h3>Results:</h3><br />
                         <textarea rows="9" cols="36" id="csvResults"></textarea><br />
                         <div id="csvResultsLink"></div><br /><br />
                         <button type="button" onclick="GenerateCsv()">Run Calcs</button><br /><br />
-                        <button type="button" onclick="PopulateChampsRegMA()">Fill with Champions Reg M-A Opponent List</button><br /><br />
-                        <button type="button" onclick="PopulateSVRegI()">Fill with T-block's Reg I Opponent List</button><br /><br />
-                        <button type="button" onclick="PopulateSVRegG()">Fill with T-block's Reg G Opponent List</button><br /><br />
+                        <h3>Populate Target Opponents List:</h3>
+                        <select id="populateDropdown">
+                            <option value="">Select opponent list...</option>
+                            <option value="champs_regMB">AquaDragon's Champions Reg M-B</option>
+                            <option value="champs_regMA">AquaDragon's Champions Reg M-A</option>
+                            <option value="sv_regI">T-block's SV Reg I</option>
+                            <option value="sv_regG">T-block's SV Reg G</option>
+                        </select>
+                        <button type="button" onclick="PopulateTargetsList()">Populate</button><br /><br />
                     </div>
                 </div>
             </div>
@@ -856,9 +862,8 @@
         <script type="text/javascript" src="script_res/damage_rby.js"></script>
         <script type="text/javascript" src="script_res/ko_chance.js"></script>
         <script type="text/javascript" src="script_res/statuscalc.js"></script>
-        <script type="text/javascript" src="calc_farm/opponents_sv_reg_g.js"></script>
-        <script type="text/javascript" src="calc_farm/opponents_sv_reg_i.js"></script>
-        <script type="text/javascript" src="calc_farm/opponents_champs_reg_ma.js"></script>
+        <script type="text/javascript" src="calc_farm/opponents.js"></script>
+        <script type="text/javascript" src="calc_farm/scripts.js"></script>  <!-- script.js needs opponents.js to load first -->
         <script type="text/javascript" src="afd_res/spamton.js"></script>
         <script type="text/javascript" src="afd_res/noise.js"></script>
         <script type="text/javascript" src="afd_res/pokedex_afd24.js"></script>
