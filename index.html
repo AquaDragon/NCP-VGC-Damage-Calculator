@@ -56,19 +56,21 @@
                         </p>
                     </div>
                     <div class="farm-panel">
-                        <h3>Your Team:</h3><br />
-                        <textarea rows="24" cols="36" id="calcFarmYourTeam"></textarea><br /><br />
+                        <h3>Your Team:</h3>
+                        <!-- <div class="sidebarSlot hide" id="c1"> -->
+                        <button class="pkmnsc" id="pkmnC1" type="button" onclick="cfSelectYourTeamSlot(1)"><img id="pkmnC1I" src="image_res/empty-slot.png"></button>
+                        <button class="pkmnsc" id="pkmnC2" type="button" onclick="cfSelectYourTeamSlot(2)"><img id="pkmnC2I" src="image_res/empty-slot.png"></button>
+                        <button class="pkmnsc" id="pkmnC3" type="button" onclick="cfSelectYourTeamSlot(3)"><img id="pkmnC3I" src="image_res/empty-slot.png"></button>
+                        <button class="pkmnsc" id="pkmnC4" type="button" onclick="cfSelectYourTeamSlot(4)"><img id="pkmnC4I" src="image_res/empty-slot.png"></button>
+                        <button class="pkmnsc" id="pkmnC5" type="button" onclick="cfSelectYourTeamSlot(5)"><img id="pkmnC5I" src="image_res/empty-slot.png"></button>
+                        <button class="pkmnsc" id="pkmnC6" type="button" onclick="cfSelectYourTeamSlot(6)"><img id="pkmnC6I" src="image_res/empty-slot.png"></button>
+                        <!-- </div> -->
+                        <button type="button" onclick="cfLoadYourTeam()">Load Team</button><br /><br />
+
+                        <textarea rows="24" cols="36" id="cfInputYourTeam"></textarea><br /><br />
                     </div>
                     <div class="farm-panel">
                         <h3>Target Opponents:</h3><br />
-                        <textarea rows="24" cols="36" id="calcFarmTargetOpponents"></textarea>
-                    </div>
-                    <div class="farm-panel">
-                        <h3>Results:</h3><br />
-                        <textarea rows="9" cols="36" id="csvResults"></textarea><br />
-                        <div id="csvResultsLink"></div><br /><br />
-                        <button type="button" onclick="GenerateCsv()">Run Calcs</button><br /><br />
-                        <h3>Populate Target Opponents List:</h3>
                         <select id="populateDropdown">
                             <option value="">Select opponent list...</option>
                             <option value="champs_regMB">AquaDragon's Champions Reg M-B</option>
@@ -76,7 +78,14 @@
                             <option value="sv_regI">T-block's SV Reg I</option>
                             <option value="sv_regG">T-block's SV Reg G</option>
                         </select>
-                        <button type="button" onclick="PopulateTargetsList()">Populate</button><br /><br />
+                        <button type="button" onclick="cfPopulateTargetsList()">Populate</button><br /><br />
+                        <textarea rows="24" cols="36" id="cfInputTargetOpponents"></textarea>
+                    </div>
+                    <div class="farm-panel">
+                        <h3>Results:</h3><br />
+                        <textarea rows="9" cols="36" id="csvResults"></textarea><br />
+                        <div id="csvResultsLink"></div><br /><br />
+                        <button type="button" onclick="GenerateCsv()">Run Calcs</button><br /><br />
                     </div>
                 </div>
             </div>

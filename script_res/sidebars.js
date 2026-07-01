@@ -86,11 +86,16 @@ function reloadSidebar(pnum) {
     }
 }
 
+// modified to check the calc farm display bar
 function getSidebarImg(teamslotI, displayName) {
     let fallbackName = displayName;
-    let pIndex = teamslotI[5] == 'L' ? 0 : teamslotI[5] == 'R' ? 1 : -1;
+    let pIndex = teamslotI[5] == 'L' ? 0 : teamslotI[5] == 'R' ? 1 : teamslotI[5] == 'C' ? 88 :-1; // modified
     let slotIndex = parseInt(teamslotI[6]) - 1;
-    let setName = pIndex == 0 ? LEFT_SIDEBAR_NAMES[slotIndex] : pIndex == 1 ? RIGHT_SIDEBAR_NAMES[slotIndex] : -1;
+    let setName =
+        pIndex == 0 ? LEFT_SIDEBAR_NAMES[slotIndex] :
+        pIndex == 1 ? RIGHT_SIDEBAR_NAMES[slotIndex] :
+        pIndex == 88 ? CALCFARM_YOURTEAM_DISPLAY_NAMES[slotIndex] :
+        -1;  // modified
     let setDetails = setdex[displayName][setName];
 
     if (displayName in calcToShowdownFormes) {
