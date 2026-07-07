@@ -14,7 +14,7 @@ function cfLoadYourTeam() {
         CALCFARM_YOURTEAM_DISPLAY_NAMES[j] = yourTeamSets[j][1];
 
         var fullName = yourTeamSets[j][0] + ' (' + yourTeamSets[j][1] + ')';
-        // loadPreset('#p1', fullName);  // update sidebar left
+        loadPreset('#p1', fullName);  // update sidebar left
         var p1 = new Pokemon($("#p1"));
         p1.shortName = headerName(p1);
         CALCFARM_OFFENSIVE_RESULTS[p1.shortName] = [];
@@ -68,7 +68,7 @@ function cfLoadTargetOpponents() {
 
     for (var j = 0; j < targetSets.length; ++j) {
         var fullName = targetSets[j][0] + ' (' + targetSets[j][1] + ')';
-        // loadPreset('#p2', fullName);  // update sidebar right
+        loadPreset('#p2', fullName);  // update sidebar right
         var p2 = new Pokemon($("#p2"));
         p2.shortName = headerName(p2);
         CALCFARM_TARGETS.push(p2);
