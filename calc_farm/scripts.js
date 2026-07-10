@@ -1,12 +1,21 @@
 var CALCFARM_YOURTEAM = [];
 var CALCFARM_YOURTEAM_DISPLAY = [];  // similar to CURRENT_SIDEBARS storing only base form names
-var CALCFARM_YOURTEAM_DISPLAY_NAMES = [];
+var CALCFARM_YOURTEAM_DISPLAY_NAMES = [];  // setnames
+var CALCFARM_YOURTEAM_DISPLAY_CURRENT = null;
 
 var CALCFARM_TARGETS = [];
 var CALCFARM_OFFENSIVE_RESULTS = {};
 var CALCFARM_DEFENSIVE_RESULTS = {};
 
+const targetOpponentsLists = {
+    champs_regMB: opponents_champs_reg_mb,
+    champs_regMA: opponents_champs_reg_ma,
+    sv_regI: opponents_sv_reg_i,
+    sv_regG: opponents_sv_reg_g
+};
+
 function cfLoadYourTeam() {
+    CALCFARM_YOURTEAM = [];  // clear results before updating
     var yourTeamSets = saveCalcFarmSetsAs('calcfarm_yourteam', 'cfInputYourTeam');
 
     for (var j = 0; j < yourTeamSets.length; ++j) {
@@ -20,6 +29,9 @@ function cfLoadYourTeam() {
         CALCFARM_OFFENSIVE_RESULTS[p1.shortName] = [];
         CALCFARM_DEFENSIVE_RESULTS[p1.shortName] = [];
         CALCFARM_YOURTEAM.push(p1);
+    }
+    if (CALCFARM_YOURTEAM_DISPLAY_CURRENT === null) {
+        CALCFARM_YOURTEAM_DISPLAY_CURRENT = CALCFARM_YOURTEAM_DISPLAY[0];
     }
     reloadYourTeamDisplay();
     console.log('Done loading Your Team.');
@@ -40,20 +52,19 @@ function reloadYourTeamDisplay() {
 // similar to loadSidebarSlot in sidebars.js
 function cfSelectYourTeamSlot(teamnum) {
     var speciesName = CALCFARM_YOURTEAM_DISPLAY[teamnum - 1];
+    CALCFARM_YOURTEAM_DISPLAY_CURRENT = speciesName;
     var setName = CALCFARM_YOURTEAM_DISPLAY_NAMES[teamnum - 1];
     if (speciesName in pokedex) {
         var slotName = speciesName + ' (' + setName + ')';
         loadPreset('#p1', slotName);  // always load on left sidebar (p1)
+
+        // don't run calcs yet if team has not loaded (not intuitive to user)
+        if (CALCFARM_YOURTEAM.length !== 0) {
+            constructTable(speciesName);
+        }
     }
 }
 
-
-const targetOpponentsLists = {
-    champs_regMB: opponents_champs_reg_mb,
-    champs_regMA: opponents_champs_reg_ma,
-    sv_regI: opponents_sv_reg_i,
-    sv_regG: opponents_sv_reg_g
-};
 
 function cfPopulateTargetsList() {
     const value = document.getElementById("populateDropdown").value;
@@ -64,6 +75,7 @@ function cfPopulateTargetsList() {
 }
 
 function cfLoadTargetOpponents() {
+    CALCFARM_TARGETS = [];  // clear results before updating
     var targetSets = saveCalcFarmSetsAs('calcfarm_targets', 'cfInputTargetOpponents');
 
     for (var j = 0; j < targetSets.length; ++j) {
@@ -104,18 +116,150 @@ function headerName(p) {
 
 }
 
+$(".cftable-update").change(function() {
+    if (CALCFARM_YOURTEAM_DISPLAY_CURRENT !== null) {
+        constructTable()
+    }
+})
+
+function constructTable() {
+    const calcType = $('input:radio[name="cfCalcType"]:checked').val();
+    const results = calcType === "Offensive" ? CALCFARM_OFFENSIVE_RESULTS : CALCFARM_DEFENSIVE_RESULTS;
+
+    // find index that matches currently displayed mon, then display that result (array keys do not match)
+    let p = Object.keys(results)[CALCFARM_YOURTEAM_DISPLAY.indexOf(CALCFARM_YOURTEAM_DISPLAY_CURRENT)];  
+
+    const cfTable = document.getElementById('cfTable');
+    cfTable.innerHTML = '';  // clear field
+
+    const table = document.createElement("table");
+    const titleRow = document.createElement("tr");
+    const titleCell = document.createElement("td");
+
+    titleCell.textContent = (calcType === "Offensive" ? "OFFENSIVE: " : "DEFENSIVE: ") + p;
+    titleRow.appendChild(titleCell);
+    table.appendChild(titleRow);
+
+    if (calcType === "Offensive") {
+        const headerRow = document.createElement("tr");
+        const headers = [
+            'Defender',
+            results[p][0][0],
+            results[p][1][0],
+            results[p][2][0],
+            results[p][3][0]
+        ];
+
+        headers.forEach(header => {
+            const th = document.createElement("th");
+            th.textContent = header;
+            headerRow.appendChild(th);
+        });
+
+        table.appendChild(headerRow);
+
+        let i = 0;
+        while (i < results[p].length) {
+            const row = document.createElement("tr");
+            const data = [
+                results[p][i][1],
+                results[p][i][2],
+                results[p][i + 1][2],
+                results[p][i + 2][2],
+                results[p][i + 3][2]
+            ];
+
+            data.forEach(value => {
+                const td = document.createElement("td");
+                td.textContent = value;
+                row.appendChild(td);
+            });
+
+            table.appendChild(row);
+            i += 4;
+        }
+    } else {
+        // if calcType === "Defensive"
+        const chunks = [];
+        let i = 0;
+
+        while (i < results[p].length) {
+            const chunk = results[p].slice(i, i + 4);
+
+            chunk.sort((a, b) => {
+                const getMin = str => parseInt(str.split(' - ')[0], 10);
+                return getMin(b[2]) - getMin(a[2]);
+            });
+
+            if (chunk.length === 4) {
+                chunks.push(chunk);
+            }
+
+            i += 4;
+        }
+
+        chunks.sort((a, b) => {
+            const getMin = str => parseFloat(str.split(' - ')[0], 10);
+            return getMin(b[0][2]) - getMin(a[0][2]);
+        });
+
+        const headerRow = document.createElement("tr");
+        const headers = [
+            "Attacker",
+            "Move 1", "Damage",
+            "Move 2", "Damage",
+            "Move 3", "Damage",
+            "Move 4", "Damage"
+        ];
+
+        headers.forEach(header => {
+            const th = document.createElement("th");
+            th.textContent = header;
+            headerRow.appendChild(th);
+        });
+
+        table.appendChild(headerRow);
+
+        for (const chunk of chunks) {
+            const row = document.createElement("tr");
+            const data = [
+                chunk[0][1],
+                chunk[0][0], chunk[0][2],
+                chunk[1][0], chunk[1][2],
+                chunk[2][0], chunk[2][2],
+                chunk[3][0], chunk[3][2]
+            ];
+
+            data.forEach(value => {
+                const td = document.createElement("td");
+                td.textContent = value;
+                row.appendChild(td);
+            });
+
+            table.appendChild(row);
+        }
+    }
+    cfTable.appendChild(table);
+}
+
+
 // Reads in the sets given by the user on both sides, runs all calculations, and generates
 // the CSV that summarizes the results.
-function GenerateCsv() {
+function runCalcs() {
+    console.log('current', CALCFARM_YOURTEAM_DISPLAY_CURRENT)
+    CALCFARM_OFFENSIVE_RESULTS = {};  // clear results before updating
+    CALCFARM_DEFENSIVE_RESULTS = {};
+
     let offensiveResults = CALCFARM_OFFENSIVE_RESULTS;
     let defensiveResults = CALCFARM_DEFENSIVE_RESULTS;
 
-    cfLoadYourTeam();  // for now auto-update with latest input in case of changes
+    cfLoadYourTeam();  // for now auto-update with whatever input is there, in case it changes
     let leftPokemon = CALCFARM_YOURTEAM;
 
     cfLoadTargetOpponents();  // load targets before running calcs
     let rightPokemon = CALCFARM_TARGETS;
 
+    // (To do) in future may allow each calculation to have its own Field()
     var field = new Field();
     // Clear weather and terrain, otherwise all calculations are performed using the
     // weather/terrain that was entered into the form when this function was called.
@@ -159,6 +303,16 @@ function GenerateCsv() {
         }
         console.log('Done computing for ' + leftPokemon[i].shortName);
     }
+    constructTable();  // update table once calculations are done
+}
+
+function GenerateCsv() {
+    // check to see if calcs have run... if it hasn't then run it before saving as csv
+    if (Object.keys(CALCFARM_OFFENSIVE_RESULTS).length === 0 && Object.keys(CALCFARM_DEFENSIVE_RESULTS).length === 0) {
+        runCalcs();
+    }
+    let offensiveResults = CALCFARM_OFFENSIVE_RESULTS;
+    let defensiveResults = CALCFARM_DEFENSIVE_RESULTS;
 
     let csv = "";
     for (let p in offensiveResults) {
@@ -225,6 +379,6 @@ function GenerateCsv() {
 // Saves all pokemon entered into the `source` text as custom sets "{category} #{index}".
 function saveCalcFarmSetsAs(category, source, sidebarUsed = 0) {
     var string = document.getElementById(source).value;
-    var sets = processSave(string, category, sidebarUsed, undefined, true); // Logic follows processSave()
+    var sets = processSave(string, category, sidebarUsed, undefined, true);  // Logic follows processSave()
     return sets;
 }

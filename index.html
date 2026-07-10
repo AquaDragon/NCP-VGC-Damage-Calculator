@@ -57,20 +57,19 @@
                     </div>
                     <div class="farm-panel">
                         <h3>Your Team:</h3>
-                        <!-- <div class="sidebarSlot hide" id="c1"> -->
-                        <button class="pkmnsc" id="pkmnC1" type="button" onclick="cfSelectYourTeamSlot(1)"><img id="pkmnC1I" src="image_res/empty-slot.png"></button>
-                        <button class="pkmnsc" id="pkmnC2" type="button" onclick="cfSelectYourTeamSlot(2)"><img id="pkmnC2I" src="image_res/empty-slot.png"></button>
-                        <button class="pkmnsc" id="pkmnC3" type="button" onclick="cfSelectYourTeamSlot(3)"><img id="pkmnC3I" src="image_res/empty-slot.png"></button>
-                        <button class="pkmnsc" id="pkmnC4" type="button" onclick="cfSelectYourTeamSlot(4)"><img id="pkmnC4I" src="image_res/empty-slot.png"></button>
-                        <button class="pkmnsc" id="pkmnC5" type="button" onclick="cfSelectYourTeamSlot(5)"><img id="pkmnC5I" src="image_res/empty-slot.png"></button>
-                        <button class="pkmnsc" id="pkmnC6" type="button" onclick="cfSelectYourTeamSlot(6)"><img id="pkmnC6I" src="image_res/empty-slot.png"></button>
-                        <!-- </div> -->
-                        <button type="button" onclick="cfLoadYourTeam()">Load Team</button><br /><br />
-
                         <textarea rows="24" cols="36" id="cfInputYourTeam"></textarea><br /><br />
+                        <div>
+                            <button class="pkmnsc" id="pkmnC1" type="button" onclick="cfSelectYourTeamSlot(1)"><img id="pkmnC1I" src="image_res/empty-slot.png"></button>
+                            <button class="pkmnsc" id="pkmnC2" type="button" onclick="cfSelectYourTeamSlot(2)"><img id="pkmnC2I" src="image_res/empty-slot.png"></button>
+                            <button class="pkmnsc" id="pkmnC3" type="button" onclick="cfSelectYourTeamSlot(3)"><img id="pkmnC3I" src="image_res/empty-slot.png"></button>
+                            <button class="pkmnsc" id="pkmnC4" type="button" onclick="cfSelectYourTeamSlot(4)"><img id="pkmnC4I" src="image_res/empty-slot.png"></button>
+                            <button class="pkmnsc" id="pkmnC5" type="button" onclick="cfSelectYourTeamSlot(5)"><img id="pkmnC5I" src="image_res/empty-slot.png"></button>
+                            <button class="pkmnsc" id="pkmnC6" type="button" onclick="cfSelectYourTeamSlot(6)"><img id="pkmnC6I" src="image_res/empty-slot.png"></button>
+                        </div>
+                        <!-- <button type="button" onclick="cfLoadYourTeam()">Load Team</button><br /><br /> -->                        
                     </div>
                     <div class="farm-panel">
-                        <h3>Target Opponents:</h3><br />
+                        <h3>Target Opponents:</h3>
                         <select id="populateDropdown">
                             <option value="">Select opponent list...</option>
                             <option value="champs_regMB">AquaDragon's Champions Reg M-B</option>
@@ -83,9 +82,28 @@
                     </div>
                     <div class="farm-panel">
                         <h3>Results:</h3><br />
-                        <textarea rows="9" cols="36" id="csvResults"></textarea><br />
+                        <textarea rows="9" cols="48" id="csvResults"></textarea><br />
                         <div id="csvResultsLink"></div><br /><br />
-                        <button type="button" onclick="GenerateCsv()">Run Calcs</button><br /><br />
+                        <button type="button" onclick="runCalcs()">Run Calcs</button>
+                        <button type="button" onclick="GenerateCsv()">Generate CSV file</button><br /><br />
+
+                        <div class="info-group">
+                            <div style="width: 100%; margin: 0 auto 5px;" title="Select the type of calculations to be displayed with respect to your team.">
+                                <span>Display Calculations:</span>
+                                <input class="btn-input result-move cftable-update" type="radio" name="cfCalcType" value="Offensive" id="cfOffensive" checked="checked" /><label class="btn btn-left" for="cfOffensive">Offensive</label>
+                                <input class="btn-input result-move cftable-update" type="radio" name="cfCalcType" value="Defensive" id="cfDefensive" /><label class="btn btn-right" for="cfDefensive">Defensive</label>
+                            </div>
+<!--                             <div style="width: 100%; margin: 0 auto 5px;" title="Test Button">
+                                <span>Test Button</span>
+                                <input class="btn-input result-move" type="radio" name="testButton" value="test1" id="test1" checked="checked" /><label class="btn btn-left" for="test1">Option 1</label>
+                                <input class="btn-input result-move" type="radio" name="testButton" value="test2" id="test2" /><label class="btn btn-right" for="test2">Option 2</label>
+                            </div> -->
+                        </div>
+
+                    </div><p><br />
+                    <div class="farm-results-panel" id="cfTable">
+                        <!-- The dynamically created table will go here -->
+                        <p id="outputText">The output will appear here once the calculations have completed.</p>
                     </div>
                 </div>
             </div>

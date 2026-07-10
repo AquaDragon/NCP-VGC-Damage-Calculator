@@ -61,6 +61,12 @@ th {
     width: 33em;
     padding: 3px;
 }
+.farm-results-panel {
+    clear: left;  /* starts panel on a new row */
+    float: left;
+    width: 100%;
+    padding: 3px;
+}
 
 /* general button styling */
 .btn {
