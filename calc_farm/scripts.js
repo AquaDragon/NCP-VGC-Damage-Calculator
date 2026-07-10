@@ -1,6 +1,6 @@
 var CALCFARM_YOURTEAM = [];
-var CALCFARM_YOURTEAM_DISPLAY = [];  // similar to CURRENT_SIDEBARS storing only base form names
-var CALCFARM_YOURTEAM_DISPLAY_NAMES = [];  // setnames
+var CALCFARM_YOURTEAM_DISPLAY = []; // similar to CURRENT_SIDEBARS storing only base form names
+var CALCFARM_YOURTEAM_DISPLAY_NAMES = []; // setnames
 var CALCFARM_YOURTEAM_DISPLAY_CURRENT = null;
 
 var CALCFARM_TARGETS = [];
@@ -11,11 +11,11 @@ const targetOpponentsLists = {
     champs_regMB: opponents_champs_reg_mb,
     champs_regMA: opponents_champs_reg_ma,
     sv_regI: opponents_sv_reg_i,
-    sv_regG: opponents_sv_reg_g
+    sv_regG: opponents_sv_reg_g,
 };
 
 function cfLoadYourTeam() {
-    CALCFARM_YOURTEAM = [];  // clear results before updating
+    CALCFARM_YOURTEAM = []; // clear results before updating
     var yourTeamSets = saveCalcFarmSetsAs('calcfarm_yourteam', 'cfInputYourTeam');
 
     for (var j = 0; j < yourTeamSets.length; ++j) {
@@ -23,8 +23,8 @@ function cfLoadYourTeam() {
         CALCFARM_YOURTEAM_DISPLAY_NAMES[j] = yourTeamSets[j][1];
 
         var fullName = yourTeamSets[j][0] + ' (' + yourTeamSets[j][1] + ')';
-        loadPreset('#p1', fullName);  // update sidebar left
-        var p1 = new Pokemon($("#p1"));
+        loadPreset('#p1', fullName); // update sidebar left
+        var p1 = new Pokemon($('#p1'));
         p1.shortName = headerName(p1);
         CALCFARM_OFFENSIVE_RESULTS[p1.shortName] = [];
         CALCFARM_DEFENSIVE_RESULTS[p1.shortName] = [];
@@ -56,7 +56,7 @@ function cfSelectYourTeamSlot(teamnum) {
     var setName = CALCFARM_YOURTEAM_DISPLAY_NAMES[teamnum - 1];
     if (speciesName in pokedex) {
         var slotName = speciesName + ' (' + setName + ')';
-        loadPreset('#p1', slotName);  // always load on left sidebar (p1)
+        loadPreset('#p1', slotName); // always load on left sidebar (p1)
 
         // don't run calcs yet if team has not loaded (not intuitive to user)
         if (CALCFARM_YOURTEAM.length !== 0) {
@@ -65,9 +65,8 @@ function cfSelectYourTeamSlot(teamnum) {
     }
 }
 
-
 function cfPopulateTargetsList() {
-    const value = document.getElementById("populateDropdown").value;
+    const value = document.getElementById('populateDropdown').value;
 
     if (targetOpponentsLists[value]) {
         $('#cfInputTargetOpponents').val(targetOpponentsLists[value]);
@@ -75,19 +74,18 @@ function cfPopulateTargetsList() {
 }
 
 function cfLoadTargetOpponents() {
-    CALCFARM_TARGETS = [];  // clear results before updating
+    CALCFARM_TARGETS = []; // clear results before updating
     var targetSets = saveCalcFarmSetsAs('calcfarm_targets', 'cfInputTargetOpponents');
 
     for (var j = 0; j < targetSets.length; ++j) {
         var fullName = targetSets[j][0] + ' (' + targetSets[j][1] + ')';
-        loadPreset('#p2', fullName);  // update sidebar right
-        var p2 = new Pokemon($("#p2"));
+        loadPreset('#p2', fullName); // update sidebar right
+        var p2 = new Pokemon($('#p2'));
         p2.shortName = headerName(p2);
         CALCFARM_TARGETS.push(p2);
     }
     console.log('Done loading targets.');
 }
-
 
 // Returns a string that captures the amount of investment into `statName`, accounting for both
 // the number of EVs in the stat (`evs`) and the nature (`nature`). e.g., "252+" for attack for
@@ -101,57 +99,70 @@ function evString(evs, nature, statName) {
 // "Incineroar@Sitrus Berry 236/44/20/0-/124+/84".
 function headerName(p) {
     if (gen == 10) {
-        return p.name + '@' + p.item + ' ' + p.HPSPs + '/' + [evString(p.sps.at, p.nature, 'at'), 
-                                                              evString(p.sps.df, p.nature, 'df'),
-                                                              evString(p.sps.sa, p.nature, 'sa'),
-                                                              evString(p.sps.sd, p.nature, 'sd'),
-                                                              evString(p.sps.sp, p.nature, 'sp')].join('/');
+        return (
+            p.name +
+            '@' +
+            p.item +
+            ' ' +
+            p.HPSPs +
+            '/' +
+            [
+                evString(p.sps.at, p.nature, 'at'),
+                evString(p.sps.df, p.nature, 'df'),
+                evString(p.sps.sa, p.nature, 'sa'),
+                evString(p.sps.sd, p.nature, 'sd'),
+                evString(p.sps.sp, p.nature, 'sp'),
+            ].join('/')
+        );
     } else {
-        return p.name + '@' + p.item + ' ' + p.HPEVs + '/' + [evString(p.evs.at, p.nature, 'at'), 
-                                                              evString(p.evs.df, p.nature, 'df'),
-                                                              evString(p.evs.sa, p.nature, 'sa'),
-                                                              evString(p.evs.sd, p.nature, 'sd'),
-                                                              evString(p.evs.sp, p.nature, 'sp')].join('/');  
+        return (
+            p.name +
+            '@' +
+            p.item +
+            ' ' +
+            p.HPEVs +
+            '/' +
+            [
+                evString(p.evs.at, p.nature, 'at'),
+                evString(p.evs.df, p.nature, 'df'),
+                evString(p.evs.sa, p.nature, 'sa'),
+                evString(p.evs.sd, p.nature, 'sd'),
+                evString(p.evs.sp, p.nature, 'sp'),
+            ].join('/')
+        );
     }
-
 }
 
-$(".cftable-update").change(function() {
+$('.cftable-update').change(function () {
     if (CALCFARM_YOURTEAM_DISPLAY_CURRENT !== null) {
-        constructTable()
+        constructTable();
     }
-})
+});
 
 function constructTable() {
     const calcType = $('input:radio[name="cfCalcType"]:checked').val();
-    const results = calcType === "Offensive" ? CALCFARM_OFFENSIVE_RESULTS : CALCFARM_DEFENSIVE_RESULTS;
+    const results = calcType === 'Offensive' ? CALCFARM_OFFENSIVE_RESULTS : CALCFARM_DEFENSIVE_RESULTS;
 
     // find index that matches currently displayed mon, then display that result (array keys do not match)
-    let p = Object.keys(results)[CALCFARM_YOURTEAM_DISPLAY.indexOf(CALCFARM_YOURTEAM_DISPLAY_CURRENT)];  
+    let p = Object.keys(results)[CALCFARM_YOURTEAM_DISPLAY.indexOf(CALCFARM_YOURTEAM_DISPLAY_CURRENT)];
 
     const cfTable = document.getElementById('cfTable');
-    cfTable.innerHTML = '';  // clear field
+    cfTable.innerHTML = ''; // clear field
 
-    const table = document.createElement("table");
-    const titleRow = document.createElement("tr");
-    const titleCell = document.createElement("td");
+    const table = document.createElement('table');
+    const titleRow = document.createElement('tr');
+    const titleCell = document.createElement('td');
 
-    titleCell.textContent = (calcType === "Offensive" ? "OFFENSIVE: " : "DEFENSIVE: ") + p;
+    titleCell.textContent = (calcType === 'Offensive' ? 'OFFENSIVE: ' : 'DEFENSIVE: ') + p;
     titleRow.appendChild(titleCell);
     table.appendChild(titleRow);
 
-    if (calcType === "Offensive") {
-        const headerRow = document.createElement("tr");
-        const headers = [
-            'Defender',
-            results[p][0][0],
-            results[p][1][0],
-            results[p][2][0],
-            results[p][3][0]
-        ];
+    if (calcType === 'Offensive') {
+        const headerRow = document.createElement('tr');
+        const headers = ['Defender', results[p][0][0], results[p][1][0], results[p][2][0], results[p][3][0]];
 
-        headers.forEach(header => {
-            const th = document.createElement("th");
+        headers.forEach((header) => {
+            const th = document.createElement('th');
             th.textContent = header;
             headerRow.appendChild(th);
         });
@@ -160,17 +171,17 @@ function constructTable() {
 
         let i = 0;
         while (i < results[p].length) {
-            const row = document.createElement("tr");
+            const row = document.createElement('tr');
             const data = [
                 results[p][i][1],
                 results[p][i][2],
                 results[p][i + 1][2],
                 results[p][i + 2][2],
-                results[p][i + 3][2]
+                results[p][i + 3][2],
             ];
 
-            data.forEach(value => {
-                const td = document.createElement("td");
+            data.forEach((value) => {
+                const td = document.createElement('td');
                 td.textContent = value;
                 row.appendChild(td);
             });
@@ -187,7 +198,7 @@ function constructTable() {
             const chunk = results[p].slice(i, i + 4);
 
             chunk.sort((a, b) => {
-                const getMin = str => parseInt(str.split(' - ')[0], 10);
+                const getMin = (str) => parseInt(str.split(' - ')[0], 10);
                 return getMin(b[2]) - getMin(a[2]);
             });
 
@@ -199,21 +210,15 @@ function constructTable() {
         }
 
         chunks.sort((a, b) => {
-            const getMin = str => parseFloat(str.split(' - ')[0], 10);
+            const getMin = (str) => parseFloat(str.split(' - ')[0], 10);
             return getMin(b[0][2]) - getMin(a[0][2]);
         });
 
-        const headerRow = document.createElement("tr");
-        const headers = [
-            "Attacker",
-            "Move 1", "Damage",
-            "Move 2", "Damage",
-            "Move 3", "Damage",
-            "Move 4", "Damage"
-        ];
+        const headerRow = document.createElement('tr');
+        const headers = ['Attacker', 'Move 1', 'Damage', 'Move 2', 'Damage', 'Move 3', 'Damage', 'Move 4', 'Damage'];
 
-        headers.forEach(header => {
-            const th = document.createElement("th");
+        headers.forEach((header) => {
+            const th = document.createElement('th');
             th.textContent = header;
             headerRow.appendChild(th);
         });
@@ -221,17 +226,21 @@ function constructTable() {
         table.appendChild(headerRow);
 
         for (const chunk of chunks) {
-            const row = document.createElement("tr");
+            const row = document.createElement('tr');
             const data = [
                 chunk[0][1],
-                chunk[0][0], chunk[0][2],
-                chunk[1][0], chunk[1][2],
-                chunk[2][0], chunk[2][2],
-                chunk[3][0], chunk[3][2]
+                chunk[0][0],
+                chunk[0][2],
+                chunk[1][0],
+                chunk[1][2],
+                chunk[2][0],
+                chunk[2][2],
+                chunk[3][0],
+                chunk[3][2],
             ];
 
-            data.forEach(value => {
-                const td = document.createElement("td");
+            data.forEach((value) => {
+                const td = document.createElement('td');
                 td.textContent = value;
                 row.appendChild(td);
             });
@@ -242,21 +251,20 @@ function constructTable() {
     cfTable.appendChild(table);
 }
 
-
 // Reads in the sets given by the user on both sides, runs all calculations, and generates
 // the CSV that summarizes the results.
 function runCalcs() {
-    console.log('current', CALCFARM_YOURTEAM_DISPLAY_CURRENT)
-    CALCFARM_OFFENSIVE_RESULTS = {};  // clear results before updating
+    console.log('current', CALCFARM_YOURTEAM_DISPLAY_CURRENT);
+    CALCFARM_OFFENSIVE_RESULTS = {}; // clear results before updating
     CALCFARM_DEFENSIVE_RESULTS = {};
 
     let offensiveResults = CALCFARM_OFFENSIVE_RESULTS;
     let defensiveResults = CALCFARM_DEFENSIVE_RESULTS;
 
-    cfLoadYourTeam();  // for now auto-update with whatever input is there, in case it changes
+    cfLoadYourTeam(); // for now auto-update with whatever input is there, in case it changes
     let leftPokemon = CALCFARM_YOURTEAM;
 
-    cfLoadTargetOpponents();  // load targets before running calcs
+    cfLoadTargetOpponents(); // load targets before running calcs
     let rightPokemon = CALCFARM_TARGETS;
 
     // (To do) in future may allow each calculation to have its own Field()
@@ -285,25 +293,33 @@ function runCalcs() {
             for (var m = 0; m < 4; ++m) {
                 result = damageResults[0][m];
                 [minDamage, maxDamage] = calcMinMaxDamage(result.damage, leftPokemon[i].moves[m].hits);
-                minPercent = Math.floor(minDamage * 1000 / rightPokemon[j].maxHP) / 10;
-                maxPercent = Math.floor(maxDamage * 1000 / rightPokemon[j].maxHP) / 10;
+                minPercent = Math.floor((minDamage * 1000) / rightPokemon[j].maxHP) / 10;
+                maxPercent = Math.floor((maxDamage * 1000) / rightPokemon[j].maxHP) / 10;
                 // TODO(tblock007): Consider conveying the number of hits in the move name for multi-hit moves.
                 // TODO(tblock007): Consider keeping min and max separate so they remain numeric values instead of a single string representing a range.
-                offensiveResults[leftPokemon[i].shortName].push([leftPokemon[i].moves[m].name, rightPokemon[j].shortName, minPercent + " - " + maxPercent]);
+                offensiveResults[leftPokemon[i].shortName].push([
+                    leftPokemon[i].moves[m].name,
+                    rightPokemon[j].shortName,
+                    minPercent + ' - ' + maxPercent,
+                ]);
             }
 
             // Gather the defensive calc results.
             for (var m = 0; m < 4; ++m) {
                 result = damageResults[1][m];
                 [minDamage, maxDamage] = calcMinMaxDamage(result.damage, rightPokemon[j].moves[m].hits);
-                minPercent = Math.floor(minDamage * 1000 / leftPokemon[i].maxHP) / 10;
-                maxPercent = Math.floor(maxDamage * 1000 / leftPokemon[i].maxHP) / 10;
-                defensiveResults[leftPokemon[i].shortName].push([rightPokemon[j].moves[m].name, rightPokemon[j].shortName, minPercent + " - " + maxPercent]);
+                minPercent = Math.floor((minDamage * 1000) / leftPokemon[i].maxHP) / 10;
+                maxPercent = Math.floor((maxDamage * 1000) / leftPokemon[i].maxHP) / 10;
+                defensiveResults[leftPokemon[i].shortName].push([
+                    rightPokemon[j].moves[m].name,
+                    rightPokemon[j].shortName,
+                    minPercent + ' - ' + maxPercent,
+                ]);
             }
         }
         console.log('Done computing for ' + leftPokemon[i].shortName);
     }
-    constructTable();  // update table once calculations are done
+    constructTable(); // update table once calculations are done
 }
 
 function GenerateCsv() {
@@ -314,18 +330,32 @@ function GenerateCsv() {
     let offensiveResults = CALCFARM_OFFENSIVE_RESULTS;
     let defensiveResults = CALCFARM_DEFENSIVE_RESULTS;
 
-    let csv = "";
+    let csv = '';
     for (let p in offensiveResults) {
-        csv += "OFFENSIVE: " + p + "\n";
-        csv += (['', offensiveResults[p][0][0], offensiveResults[p][1][0], offensiveResults[p][2][0], offensiveResults[p][3][0]].join(',') + '\n');
+        csv += 'OFFENSIVE: ' + p + '\n';
+        csv +=
+            [
+                '',
+                offensiveResults[p][0][0],
+                offensiveResults[p][1][0],
+                offensiveResults[p][2][0],
+                offensiveResults[p][3][0],
+            ].join(',') + '\n';
         let i = 0;
         while (i < offensiveResults[p].length) {
-            csv += [offensiveResults[p][i][1], offensiveResults[p][i][2], offensiveResults[p][i+1][2], offensiveResults[p][i+2][2], offensiveResults[p][i+3][2]].join(',') + '\n';
+            csv +=
+                [
+                    offensiveResults[p][i][1],
+                    offensiveResults[p][i][2],
+                    offensiveResults[p][i + 1][2],
+                    offensiveResults[p][i + 2][2],
+                    offensiveResults[p][i + 3][2],
+                ].join(',') + '\n';
             i += 4;
         }
         csv += '\n';
 
-        csv += "DEFENSIVE: " + p + "\n";
+        csv += 'DEFENSIVE: ' + p + '\n';
         csv += '\n';
 
         // gather all the defensive calcs sorted by move which does the most damage first
@@ -335,7 +365,7 @@ function GenerateCsv() {
             const chunk = defensiveResults[p].slice(i, i + 4);
 
             chunk.sort((a, b) => {
-                const getMin = str => parseInt(str.split(' - ')[0], 10);
+                const getMin = (str) => parseInt(str.split(' - ')[0], 10);
                 return getMin(b[2]) - getMin(a[2]);
             });
 
@@ -348,18 +378,24 @@ function GenerateCsv() {
 
         // sort mons by strongest damage calc
         chunks.sort((a, b) => {
-            const getMin = str => parseFloat(str.split(' - ')[0], 10);
+            const getMin = (str) => parseFloat(str.split(' - ')[0], 10);
             return getMin(b[0][2]) - getMin(a[0][2]); // descending
         });
 
         // then print output
         for (const chunk of chunks) {
-            csv += [
-                chunk[0][1], chunk[0][0], chunk[0][2],
-                chunk[1][0], chunk[1][2],
-                chunk[2][0], chunk[2][2],
-                chunk[3][0], chunk[3][2],
-            ].join(',') + '\n';
+            csv +=
+                [
+                    chunk[0][1],
+                    chunk[0][0],
+                    chunk[0][2],
+                    chunk[1][0],
+                    chunk[1][2],
+                    chunk[2][0],
+                    chunk[2][2],
+                    chunk[3][0],
+                    chunk[3][2],
+                ].join(',') + '\n';
         }
         csv += '\n************************************************************\n\n';
     }
@@ -373,12 +409,14 @@ function GenerateCsv() {
     exportLink.appendChild(document.createTextNode('Download as calcs.csv'));
     $('#csvResultsLink').html(exportLink);
 
-    alert('CSV has been written to the results text box!\n\nCopy it into a .csv file and then import into Google Sheets for easier viewing.');
+    alert(
+        'CSV has been written to the results text box!\n\nCopy it into a .csv file and then import into Google Sheets for easier viewing.'
+    );
 }
 
 // Saves all pokemon entered into the `source` text as custom sets "{category} #{index}".
 function saveCalcFarmSetsAs(category, source, sidebarUsed = 0) {
     var string = document.getElementById(source).value;
-    var sets = processSave(string, category, sidebarUsed, undefined, true);  // Logic follows processSave()
+    var sets = processSave(string, category, sidebarUsed, undefined, true); // Logic follows processSave()
     return sets;
 }

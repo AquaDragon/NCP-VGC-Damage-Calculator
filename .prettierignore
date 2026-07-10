@@ -1,0 +1,11 @@
+# Ignore everything
+*
+
+# Allow directories so Prettier can traverse them
+!*/
+
+# Don't ignore the calc_farm folder
+!calc_farm/
+
+# Don't ignore anything inside calc_farm
+!calc_farm/**

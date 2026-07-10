@@ -303,7 +303,7 @@ Modest Nature
 - Hydro Pump  
 - Thunderbolt  
 - Volt Switch  
-`
+`;
 
 // ----------------------------------------------------------------------------
 const opponents_champs_reg_ma = `Sneasler @ White Herb  
@@ -784,7 +784,7 @@ Modest Nature
 - Dark Pulse  
 - Draco Meteor  
 - Protect  
-- Earth Power`
+- Earth Power`;
 
 // ----------------------------------------------------------------------------
 const opponents_sv_reg_i = `Calyrex-Shadow @ Focus Sash
@@ -1877,7 +1877,7 @@ Bold Nature
 - Taunt
 - Yawn
 - Moonlight
-`
+`;
 
 // ----------------------------------------------------------------------------
 const opponents_sv_reg_g = `Calyrex-Shadow @ Covert Cloak
@@ -2782,4 +2782,4 @@ Bold Nature
 - Taunt
 - Yawn
 - Moonlight
-`
+`;
